@@ -1,0 +1,252 @@
+#!/data/data/com.termux/files/usr/bin/bash
+#RMD
+#Coded by Z3R07-RED on Jun 16 2020
+
+PWD=$(pwd)
+
+if [[ -f ./.config/data.conf ]]; then
+    source .config/data.conf
+fi
+
+if [[ -f ./tmp/Stop.tmp ]]; then
+    rm ./tmp/Stop.tmp
+    echo "export crun=\"True\"" > ./tmp/Stop.tmp
+    echo "export Finished=\"\"" >> ./tmp/Stop.tmp
+else
+    echo "export crun=\"True\"" > ./tmp/Stop.tmp
+    echo "export Finished=\"\"" >> ./tmp/Stop.tmp
+fi
+
+source ./tmp/Stop.tmp
+
+if [[ ! -d ./logs ]]; then
+    mkdir logs
+fi
+
+if [[ -f ./logs/HRM.log ]]; then
+    rm ./logs/HRM.log
+    touch ./logs/HRM.log
+else
+    touch ./logs/HRM.log
+fi
+
+if [[ -f ./logs/obsolete.log ]]; then
+    rm -f ./logs/obsolete.log
+    touch ./logs/obsolete.log
+else
+    touch ./logs/obsolete.log
+fi
+
+#################################################################
+function options_conf(){
+if [[ $unwanted_residual_data == "ON" ]]; then
+let WhatsAppd=1
+
+if [[ -d /sdcard/WhatsApp ]]; then
+    dirwpp="/sdcard/WhatsApp"
+
+elif [[ -d /storage/emulated/0/WhatsApp ]]; then
+    dirwpp="/storage/emulated/0/WhatsApp"
+
+fi
+
+if [[ -d $dirwpp ]]; then
+    let crypt12=$(find "$dirwpp/" -type f -iname '*.db.crypt12' |wc -l)
+    if [[ $crypt12 != 0 ]]; then
+        find "$dirwpp/" -type f -iname '*.db.crypt12' >> ./logs/obsolete.log
+        if [[ $comd_clean == "ANALYZE" ]]; then
+            find "$dirwpp/" -type f -iname '*.db.crypt12' > ./tmp/WhatsApp.crypt12
+            for cryptf in $(seq 1 $crypt12);
+            do
+                whatsApp_list=$(awk "NR==$WhatsAppd" ./tmp/WhatsApp.crypt12)
+                let FNF2=$(($FNF2+1))
+                printf "[%02d]   OBSOLETE FILE: '$whatsApp_list'\n" $FNF2 >> ./logs/obsoleteM.log
+                let WhatsAppd=$(($WhatsAppd+1))
+            done
+        fi
+    fi
+fi
+
+if [[ $crypt12 != 0 ]]; then
+    if [[ -d /sdcard/WhatsApp/Backups ]]; then
+        echo "/sdcard/WhatsApp/Backups" >> ./logs/obsolete.log
+        if [[ $comd_clean == "ANALYZE" ]]; then
+            let FNF2=$(($FNF2+1))
+            printf "[%02d]       DIRECTORY: '/sdcard/WhatsApp/Backups'\n" $FNF2 >> ./logs/obsoleteM.log 
+        fi
+    fi
+
+    if [[ -d /sdcard/WhatsApp/Databases ]]; then
+        echo "/sdcard/WhatsApp/Databases" >> ./logs/obsolete.log
+        if [[ $comd_clean == "ANALYZE" ]]; then
+            let FNF2=$(($FNF2+1))
+            printf "[%02d]       DIRECTORY: '/sdcard/WhatsApp/Databases'\n" $FNF2 >> ./logs/obsoleteM.log
+        fi
+    fi
+fi
+fi
+
+if [[ $thumbnail_cache == "ON" ]]; then
+    if [[ -d /sdcard/DCIM/.thumbnails ]]; then
+        for thumb in $(find "/sdcard/DCIM/.thumbnails/");
+        do
+            if [[ -f "$thumb" && -s "$thumb" ]]; then
+                echo "$thumb" >> ./logs/obsolete.log
+                if [[ $comd_clean == "ANALYZE" ]]; then
+                    let FNF2=$(($FNF2+1))
+                    printf "[%02d]   OBSOLETE FILE: '$thumb'\n" $FNF2 >> ./logs/obsoleteM.log
+                fi
+            fi
+        done
+    fi
+fi
+}
+
+function empty_folderssel(){
+if [[ $empty_folders == "ON" ]]; then
+    if [[ -d $SLE ]]; then
+        empty_list_dir=$(find "$SLE/" |wc -l)
+    else
+        empty_list_dir=0
+    fi
+
+    if [[ $empty_list_dir == 1 ]]; then
+        echo "$SLE" >> ./logs/obsolete.log
+        if [[ $comd_clean == "ANALYZE" ]]; then
+            let FNF2=$(($FNF2+1))
+            printf "[%02d] EMPTY DIRECTORY: '$SLE'\n" $FNF2 >> ./logs/obsoleteM.log
+        fi
+    fi
+fi
+}
+
+##################################################################
+
+function remove_ele(){
+EB=$(find /sdcard/ > ./tmp/Scanned_files.tmp)
+let listnun=$(cat ./tmp/Scanned_files.tmp |wc -l)
+let awtr=0
+sleep 0.2
+for i in `seq 1 $listnun`;
+do
+    awtr=$(($awtr+1))
+	SLE=$(awk "NR==$awtr" ./tmp/Scanned_files.tmp)
+	if [[ ! -s "$SLE" && ! -d "$SLE" && ! -L "$SLE" ]]; then
+		if [[ ! -s "$SLE" && -f "$SLE" ]]; then
+			if [[ $crun == "True" ]]; then
+                echo "$SLE" >> logs/obsolete.log
+			fi
+		fi
+    elif [[ $SLE == *.apk ]]; then
+        if [[ $obsolete_apks == "ON" ]]; then
+            echo "$SLE" >> logs/obsolete.log
+        fi
+	fi
+
+    if [[ -d $SLE ]]; then
+        empty_folderssel
+    fi
+
+    if [[ -f ./tmp/Stop.tmp ]]; then
+        source ./tmp/Stop.tmp
+        if [[ $crun == "False" ]]; then
+            rm -f ./tmp/* &> /dev/null
+            exit 1
+        fi
+    fi
+done
+
+options_conf
+sleep 0.2
+
+if [[ -d ./tmp ]]; then
+    rm -f ./tmp/* &> /dev/null
+    echo "export crun=\"False\"" > ./tmp/Stop.tmp
+    echo "export Finished=\"finished\"" >> ./tmp/Stop.tmp
+fi
+exit 0
+}
+
+##################################################################
+#FILE ANALYZE
+
+function FILE_ANALYZE(){
+EB=$(find /sdcard/ > ./tmp/Scanned_files.tmp)
+let NE=$(cat ./tmp/Scanned_files.tmp |wc -l)
+let FNF=1
+let FNF2=0
+sleep 0.8
+
+if [[ -f ./logs/obsoleteM.log ]]; then
+    rm -f ./logs/obsoleteM.log
+    touch ./logs/obsoleteM.log
+else
+    touch ./logs/obsoleteM.log
+fi
+
+printf "Searching for files may take a few minutes...\n\n" >> ./logs/Scanned_files.log
+sleep 3
+
+for bs in `seq 1 $NE`;
+do
+	SLE=$(awk "NR==$FNF" ./tmp/Scanned_files.tmp)
+	if [[ ! -s "$SLE" && ! -d "$SLE" && ! -L "$SLE" ]]; then
+		if [[ ! -s "$SLE" && -f "$SLE" ]]; then
+            echo "$SLE" >> ./logs/obsolete.log
+			sleep 0.2
+			FNF2=$(($FNF2+1))
+            printf "[%02d]      EMPTY FILE: '$SLE'\n" $FNF2 >> ./logs/obsoleteM.log
+
+		fi
+	elif [[ $SLE == *.apk ]]; then
+        if [[ $obsolete_apks == "ON" ]]; then
+            echo "$SLE" >> ./logs/obsolete.log
+            FNF2=$(($FNF2+1))
+            printf "[%02d]   OBSOLETE FILE: '$SLE'\n" $FNF2 >> ./logs/obsoleteM.log
+            sleep 0.2
+        fi
+
+    elif [[ -d $SLE ]]; then
+        empty_folderssel
+
+    fi
+
+    echo "$SLE" >> ./logs/Scanned_files.log
+
+    if [[ -s ./tmp/Stop.tmp ]]; then
+        source ./tmp/Stop.tmp
+        if [[ $crun == "False" ]]; then
+            rm ./tmp/*
+            exit 1
+        fi
+    fi
+	FNF=$(($FNF+1))
+done
+options_conf
+sleep 0.5
+echo "SCANNED [$bs/$NE] OBSOLETE [$FNF2]" >> ./logs/Scanned_files.log
+sleep 0.8
+echo "┌─────────────┐" >> ./logs/Scanned_files.log
+echo "│Scan finished│" >> ./logs/Scanned_files.log
+echo "└─────────────┘" >> ./logs/Scanned_files.log
+echo "OBSOLETE FILES: [$FNF2]" >> ./logs/Scanned_files.log
+if [[ -d ./tmp ]]; then
+    rm ./tmp/*
+    echo "export crun=\"False\"" > ./tmp/Stop.tmp
+    echo "export Finished=\"finished\"" >> ./tmp/Stop.tmp
+    play-audio Sounds/Sound.m4a &> /dev/null
+fi
+exit 0
+}
+
+###################################################################
+
+if [[ -f ./tmp/run.tmp ]]; then
+	comd_clean=$(cat ./tmp/run.tmp)
+fi
+
+if [[ $comd_clean == "CLEAN ALL" ]]; then
+	remove_ele
+elif [[ $comd_clean == "ANALYZE" ]]; then
+	FILE_ANALYZE
+fi

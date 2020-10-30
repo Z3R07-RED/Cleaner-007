@@ -50,7 +50,7 @@ tput civis
 echo $(clear); dependencies=(dialog file play-audio)
 echo -e "\e[1;37mCleaner-007\e[0m"
 echo ""
-echo "Coded by Z3R07 on Jun 18 2020"
+echo "Coded by Z3R07-RED on Jun 18 2020"
 echo ""
 echo -e "\033[1;37m[+]\033[0m\e[0m Checking the required tools ...\033[0m\e[0m"
 for program in "${dependencies[@]}"; do

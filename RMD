@@ -19,10 +19,6 @@ fi
 
 source ./tmp/Stop.tmp
 
-if [[ ! -d ./logs ]]; then
-    mkdir logs
-fi
-
 if [[ -f ./logs/HRM.log ]]; then
     rm ./logs/HRM.log
     touch ./logs/HRM.log

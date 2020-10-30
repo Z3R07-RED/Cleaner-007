@@ -28,6 +28,10 @@ if [[ ! -d ./tmp ]]; then
     mkdir tmp
 fi
 
+if [[ ! -d ./logs ]]; then
+    mkdir logs
+fi
+
 trap ctrl_c INT
 
 function ctrl_c(){

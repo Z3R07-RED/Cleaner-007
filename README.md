@@ -17,9 +17,9 @@ git clone https://github.com/Z3R07-RED/Cleaner-007.git
 
 USAGE:
 ======
-* cd Cleaner-007/
-* chmod +x cleaner-007.sh
-* ./cleaner-007.sh
+* `cd Cleaner-007/`
+* `chmod +x cleaner-007.sh`
+* `./cleaner-007.sh`
 
 <p align="center">
 <img src="Imag/cleaner-007.png"

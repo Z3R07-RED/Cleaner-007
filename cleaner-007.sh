@@ -18,8 +18,9 @@ This program will not harm the device.
 SCAN="./logs/Scanned_files.log"
 obsolete_logs="./logs/obsolete.log"
 
-if [[ -s .config/data.conf ]]; then
+if [[ -s ".config/data.conf" ]]; then
     source .config/data.conf
+
 else
     echo "Error: './.config/data.conf'"
     echo ""

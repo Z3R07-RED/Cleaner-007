@@ -1,4 +1,3 @@
-# Cleaner-007
 ## Author : Z3R07-RED
 ## Version: 1.0
 

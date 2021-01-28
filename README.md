@@ -5,7 +5,7 @@
 
 REQUIREMENTS:
 ======
-```bash
+```
 apt-get install dialog play-audio file -y
 ```
 

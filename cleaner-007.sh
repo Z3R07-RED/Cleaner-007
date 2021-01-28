@@ -6,6 +6,7 @@
 if [[ -f ".config/.dialog.conf" ]]; then
     export DIALOGRC=.config/.dialog.conf
 fi
+
 DIALOG=${DIALOG=dialog}
 Help="\n\
 \ZuCLEANER-007 (c) 2020 by Z3R07-RED\Zn\n\

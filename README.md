@@ -12,6 +12,10 @@ apt-get install dialog play-audio file -y
 
 Once installed, you can continue to the next point.
 
+```
+git clone https://github.com/Z3R07-RED/Cleaner-007.git
+```
+
 USAGE:
 ======
 * cd Cleaner-007/

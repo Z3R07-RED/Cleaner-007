@@ -45,7 +45,16 @@ sleep 0.2
 tput cnorm;exit 1
 }
 
+function ncurses_utils(){
+if [ ! "$(command -v tput)" ]; then
+    echo -e "\n${Y}[I]${W} apt install ncurses-utils ...${W}"
+    apt install ncurses-utils -y > /dev/null 2>&1
+    sleep 1
+fi
+}
+
 function dependencies(){
+ncurses_utils
 tput civis
 echo $(clear); dependencies=(dialog file play-audio)
 echo -e "\e[1;37mCleaner-007\e[0m"

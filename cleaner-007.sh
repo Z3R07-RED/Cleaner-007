@@ -425,6 +425,7 @@ else
         exit 0
     fi
 fi
+
 echo $(clear)
 sleep 0.8
 play-audio Sounds/cleaner.mp3 &

@@ -218,6 +218,7 @@ do
     fi
 	FNF=$(($FNF+1))
 done
+
 options_conf
 sleep 0.5
 echo "SCANNED [$bs/$NE] OBSOLETE [$FNF2]" >> ./logs/Scanned_files.log

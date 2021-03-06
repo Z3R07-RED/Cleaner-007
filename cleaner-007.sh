@@ -93,7 +93,7 @@ _setting=$($DIALOG --stdout --colors --clear \
     --ok-label "Submit" \
     --backtitle "CLEANER-007" \
     --title "SETTING" \
-    --checklist "Press the \Zb\Z4\Zu'Space'\Zn key to mark an option and then \Zb\Z4\Zu'Enter'\Zn to configure." 15 61 5 \
+    --checklist "Press the \Zb\Z4\Zu'Space'\Zn key to mark an option and then \Zb\Z4\Zu'Enter'\Zn to configure." 12 60 4 \
     "Unwanted residual data" "" $unwanted_residual_data \
     "Obsolete APKs" "" $obsolete_apks \
     "Thumbnail Cache" "" $thumbnail_cache \
@@ -146,7 +146,7 @@ case $Activate in
         play-audio Sounds/Sound.m4a &
         $DIALOG --backtitle "CLEANER-007" \
             --title "SETTING" \
-            --msgbox "\n\nConfiguration completed! :)" 10 60
+            --msgbox "\n\nConfiguration completed! :)" 9 50
         clean_007
         ;;
     1)
@@ -392,12 +392,12 @@ do
 						  --cancel-label "Exit" --item-help \
 	                      --backtitle "CLEANER-007" \
 	                      --title "MENU" \
-                          --menu "1.0" 15 51 5 \
-				          "SETTING" "Program settings" "It is recommended to configure the program." \
-				          "CLEAN ALL" "Deep cleaning" "Clean up obsolete files and directories?" \
-                          "ANALYZE" "Scan Android" "Do you want to scan the mobile device?" \
-                          "HISTORY" "Cleaning history" "Registry of files and directories deleted." \
-                          "FILE LIST" "Add a list" "You can delete a list of obsolete files or directories.")
+                          --menu "2.0" 15 51 5 \
+				          "SETTING"   "[Program settings]" "It is recommended to configure the program." \
+				          "CLEAN ALL" "[Deep cleaning   ]" "Clean up obsolete files and directories?" \
+                          "ANALYZE"   "[Scan Android    ]" "Do you want to scan the mobile device?" \
+                          "HISTORY"   "[Cleaning history]" "Registry of files and directories deleted." \
+                          "FILE LIST" "[Add a list      ]" "You can delete a list of obsolete files or directories.")
 		[ $? -ne "2" ] && {
 			break
 	    }

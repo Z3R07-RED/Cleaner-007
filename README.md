@@ -1,5 +1,5 @@
 ## Author : Z3R07-RED
-## Version: 1.0
+## Version: 2.0
 
 **Cleaner-007** : It is a tool to clean the junk or obsolete files and directories from the Android device.
 
@@ -29,7 +29,7 @@ USAGE:
 
 The tool has 2 cleaning modes:
 
-* CLEAN ALL
+* DELETE ALL OBSOLETE FILES
 * ANALYZE
 
 <p align="center">

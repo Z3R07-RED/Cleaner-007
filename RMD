@@ -82,29 +82,32 @@ if [[ $crypt12 != 0 ]]; then
 fi
 fi
 
-if [[ $thumbnail_cache == "ON" ]]; then
-    if [[ -d /sdcard/DCIM/.thumbnails ]]; then
-        for thumb in $(find "/sdcard/DCIM/.thumbnails/");
-        do
-            if [[ -f "$thumb" && -s "$thumb" ]]; then
-                echo "$thumb" >> ./logs/obsolete.log
-                if [[ $comd_clean == "ANALYZE" ]]; then
-                    let FNF2=$(($FNF2+1))
-                    printf "[%02d]   OBSOLETE FILE: '$thumb'\n" $FNF2 >> ./logs/obsoleteM.log
-                fi
+}
+
+function search_thumbnail_caches_screct(){
+for thumb in $(find "$SLE" 2>/dev/null);
+do
+    if [[ -f "$thumb" && -s "$thumb" ]]; then
+        IMAGEN_THUMBNAIL=$(file "$thumb" | grep "image" |wc -l 2>/dev/null)
+
+        if [[ $IMAGEN_THUMBNAIL != 0 ]]; then
+            echo "$thumb" >> ./logs/obsolete.log
+            if [[ $comd_clean == "ANALYZE" ]]; then
+                let FNF2=$(($FNF2+1))
+                printf "[%02d]   OBSOLETE FILE: '$thumb'\n" $FNF2 >> ./logs/obsoleteM.log
             fi
-        done
+        fi
     fi
-fi
+done
 }
 
 function empty_folderssel(){
 if [[ $empty_folders == "ON" ]]; then
-    if [[ -d $SLE ]]; then
+    if [[ -d "$SLE" ]]; then
         empty_folders_ver=$(find "$SLE" &>/dev/null)
 
         if [[ $? == 0 ]]; then
-            empty_list_dir=$(find "$SLE/" |wc -l)
+            empty_list_dir=$(find "$SLE/" |wc -l 2>/dev/null)
         else
             empty_list_dir=0
         fi
@@ -118,6 +121,22 @@ if [[ $empty_folders == "ON" ]]; then
             let FNF2=$(($FNF2+1))
             printf "[%02d] EMPTY DIRECTORY: '$SLE'\n" $FNF2 >> ./logs/obsoleteM.log
         fi
+    fi
+fi
+
+if [[ $thumbnail_cache == "ON" ]]; then
+    if [[ -d "$SLE" ]]; then
+        case $SLE in
+            .thumbnails)
+                search_thumbnail_caches_screct
+                ;;
+            thumbnails)
+                search_thumbnail_caches_screct
+                ;;
+            thumbs)
+                search_thumbnail_caches_screct
+                ;;
+        esac
     fi
 fi
 }

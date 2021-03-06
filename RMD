@@ -47,11 +47,11 @@ elif [[ -d /storage/emulated/0/WhatsApp ]]; then
 fi
 
 if [[ -d $dirwpp ]]; then
-    let crypt12=$(find "$dirwpp/" -type f -iname '*.db.crypt12' |wc -l)
+    let crypt12=$(find "$dirwpp/" -type f -iname '*.db.crypt12' |wc -l 2>/dev/null)
     if [[ $crypt12 != 0 ]]; then
         find "$dirwpp/" -type f -iname '*.db.crypt12' >> ./logs/obsolete.log
         if [[ $comd_clean == "ANALYZE" ]]; then
-            find "$dirwpp/" -type f -iname '*.db.crypt12' > ./tmp/WhatsApp.crypt12
+            find "$dirwpp/" -type f -iname '*.db.crypt12' > ./tmp/WhatsApp.crypt12 2>/dev/null
             for cryptf in $(seq 1 $crypt12);
             do
                 whatsApp_list=$(awk "NR==$WhatsAppd" ./tmp/WhatsApp.crypt12)
@@ -101,7 +101,13 @@ fi
 function empty_folderssel(){
 if [[ $empty_folders == "ON" ]]; then
     if [[ -d $SLE ]]; then
-        empty_list_dir=$(find "$SLE/" |wc -l)
+        empty_folders_ver=$(find "$SLE" &>/dev/null)
+
+        if [[ $? == 0 ]]; then
+            empty_list_dir=$(find "$SLE/" |wc -l)
+        else
+            empty_list_dir=0
+        fi
     else
         empty_list_dir=0
     fi
@@ -119,7 +125,7 @@ fi
 ##################################################################
 
 function remove_ele(){
-EB=$(find /sdcard/ > ./tmp/Scanned_files.tmp)
+EB=$(find /sdcard/ > ./tmp/Scanned_files.tmp 2>/dev/null)
 let listnun=$(cat ./tmp/Scanned_files.tmp |wc -l)
 let awtr=0
 sleep 0.2
@@ -167,7 +173,7 @@ exit 0
 #FILE ANALYZE
 
 function FILE_ANALYZE(){
-EB=$(find /sdcard/ > ./tmp/Scanned_files.tmp)
+EB=$(find /sdcard/ > ./tmp/Scanned_files.tmp 2>/dev/null)
 let NE=$(cat ./tmp/Scanned_files.tmp |wc -l)
 let FNF=1
 let FNF2=0

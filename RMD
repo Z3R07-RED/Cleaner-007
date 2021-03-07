@@ -92,6 +92,7 @@ do
 
         if [[ $IMAGEN_THUMBNAIL != 0 ]]; then
             echo "$thumb" >> ./logs/obsolete.log
+            sleep 0.2
             if [[ $comd_clean == "ANALYZE" ]]; then
                 let FNF2=$(($FNF2+1))
                 printf "[%02d]   OBSOLETE FILE: '$thumb'\n" $FNF2 >> ./logs/obsoleteM.log

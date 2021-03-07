@@ -93,7 +93,7 @@ _setting=$($DIALOG --stdout --colors --clear \
     --ok-label "Submit" \
     --backtitle "CLEANER-007" \
     --title "SETTING" \
-    --checklist "Press the \Zb\Z4\Zu'Space'\Zn key to mark an option and then \Zb\Z4\Zu'Enter'\Zn to configure." 12 60 4 \
+    --checklist "Press the \Zb\Z4\Zu'Space'\Zn key to mark an option and then \Zb\Z4\Zu'Enter'\Zn to configure." 15 60 5 \
     "Unwanted residual data" "" $unwanted_residual_data \
     "Obsolete APKs" "" $obsolete_apks \
     "Thumbnail Cache" "" $thumbnail_cache \

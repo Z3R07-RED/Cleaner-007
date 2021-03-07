@@ -104,7 +104,7 @@ done
 function empty_folderssel(){
 if [[ $empty_folders == "ON" ]]; then
     if [[ -d "$SLE" ]]; then
-        empty_folders_ver=$(find "$SLE" &>/dev/null)
+        empty_folders_ver=$(find "$SLE/" &>/dev/null)
 
         if [[ $? == 0 ]]; then
             empty_list_dir=$(find "$SLE/" |wc -l 2>/dev/null)
@@ -126,17 +126,15 @@ fi
 
 if [[ $thumbnail_cache == "ON" ]]; then
     if [[ -d "$SLE" ]]; then
-        case $SLE in
-            *["/.thumbnails"])
-                search_thumbnail_caches_screct
-                ;;
-            *["/thumbnails"])
-                search_thumbnail_caches_screct
-                ;;
-            *["/thumbs"])
-                search_thumbnail_caches_screct
-                ;;
-        esac
+        if [[ "$SLE" == *"/.thumbnails" ]]; then
+            search_thumbnail_caches_screct
+
+        elif [[ "$SLE" == *"/thumbnails" ]]; then
+            search_thumbnail_caches_screct
+
+        elif [[ "$SLE" == *"/thumbs" ]]; then
+            search_thumbnail_caches_screct
+        fi
     fi
 fi
 }

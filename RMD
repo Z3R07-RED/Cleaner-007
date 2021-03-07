@@ -85,7 +85,7 @@ fi
 }
 
 function search_thumbnail_caches_screct(){
-for thumb in $(find "$SLE" 2>/dev/null);
+for thumb in $(find "$SLE/" 2>/dev/null);
 do
     if [[ -f "$thumb" && -s "$thumb" ]]; then
         IMAGEN_THUMBNAIL=$(file "$thumb" | grep "image" |wc -l 2>/dev/null)
@@ -127,13 +127,13 @@ fi
 if [[ $thumbnail_cache == "ON" ]]; then
     if [[ -d "$SLE" ]]; then
         case $SLE in
-            .thumbnails)
+            *["/.thumbnails"])
                 search_thumbnail_caches_screct
                 ;;
-            thumbnails)
+            *["/thumbnails"])
                 search_thumbnail_caches_screct
                 ;;
-            thumbs)
+            *["/thumbs"])
                 search_thumbnail_caches_screct
                 ;;
         esac

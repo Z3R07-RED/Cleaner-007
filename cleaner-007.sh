@@ -143,7 +143,7 @@ case $Activate in
             let list_num=$(($list_num+1))
         done
         sleep 0.2
-        play-audio Sounds/Sound.m4a &
+        play-audio Sounds/Sound.m4a 2>/dev/null &
         $DIALOG --backtitle "CLEANER-007" \
             --title "SETTING" \
             --msgbox "\n\nConfiguration completed! :)" 9 50
@@ -182,14 +182,14 @@ case $? in
                 obsolete_logs="$enter_the_file"
                 removing_obsolete_files
             else
-                play-audio Sounds/Error.mp3 &
+                play-audio Sounds/Error.mp3 2>/dev/null &
                 $DIALOG --colors --backtitle "CLEANER-007" --title "ERROR" --msgbox "\Z1\ZrERROR:\Zn\n'\Zb\Z4\Zu$enter_the_file\Zn':\n\nline 1 '\Z1\Zu$_Z3R07_ENTER\Zn': No such file or directory." 13 60
                 echo $(clear)
                 echo "Program aborted."
                 echo "";exit 1
             fi
         else
-            play-audio Sounds/Error.mp3 &
+            play-audio Sounds/Error.mp3 2>/dev/null &
             $DIALOG --colors --backtitle "CLEANER-007" --title "ERROR" --msgbox "\Z0\ZrERROR:\Zn\n'\Z1\Zu$enter_the_file\Zn':\nNo such file exists." 10 60
             echo $(clear)
             echo "Finished Program."
@@ -241,7 +241,7 @@ elif [[ "$Ejecutar" == "ANALYZE" ]]; then
 	fi
 	printf "[!] DO NOT INTERRUPT SCANNING\n\n" > $SCAN
 	sleep 0.1
-	./RMD &
+	bash RMD &
     while :
     do
 	$DIALOG --clear --backtitle "CLEANER-007" \
@@ -301,7 +301,7 @@ else
 	fi
 	echo "$Ejecutar" > ./tmp/run.tmp
 	sleep 0.1
-	./RMD &
+	bash RMD &
     while :
     do
         $DIALOG --backtitle "CLEANER-007" \
@@ -333,7 +333,7 @@ let _counter=0
 let _TOLGF=$(cat "$obsolete_logs" |wc -l)
 let _aucounter=0
 
-play-audio Sounds/cleaner.mp3 &
+play-audio Sounds/cleaner.mp3 2>/dev/null &
 (while [ $_counter -le 100 ]
 do
 
@@ -430,7 +430,7 @@ fi
 
 echo $(clear)
 sleep 0.8
-play-audio Sounds/cleaner.mp3 &
+play-audio Sounds/cleaner.mp3 2>/dev/null &
 $DIALOG --colors --title "CLEANER-007" \
     --infobox "\n\ZuCLEANER-007 (c) 2020 by Z3R07-RED\Zn\n\nThis program comes ABSOLUTELY WITHOUT WARRANTY;\nthanks for using the program." 10 60 ;sleep 5
 clean_007

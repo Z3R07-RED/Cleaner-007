@@ -255,7 +255,7 @@ if [[ -d ./tmp ]]; then
     rm ./tmp/*
     echo "export crun=\"False\"" > ./tmp/Stop.tmp
     echo "export Finished=\"finished\"" >> ./tmp/Stop.tmp
-    play-audio Sounds/Sound.m4a &> /dev/null
+    play-audio Sounds/Sound.m4a 2>/dev/null
 
 fi
 exit 0

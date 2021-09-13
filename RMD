@@ -252,10 +252,10 @@ echo "│Scan finished│" >> ./logs/Scanned_files.log
 echo "└─────────────┘" >> ./logs/Scanned_files.log
 echo "OBSOLETE FILES: [$FNF2]" >> ./logs/Scanned_files.log
 if [[ -d ./tmp ]]; then
-    rm ./tmp/*
+    rm ./tmp/* 2>/dev/null
     echo "export crun=\"False\"" > ./tmp/Stop.tmp
     echo "export Finished=\"finished\"" >> ./tmp/Stop.tmp
-    play-audio Sounds/Sound.m4a 2>/dev/null
+    play-audio Sounds/cleaner.mp3 2>/dev/null
 
 fi
 exit 0

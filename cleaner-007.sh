@@ -43,9 +43,9 @@ echo "export Finished=\"finished\"" >> ./tmp/Stop.tmp
 echo $(clear)
 echo "Program aborted."
 echo ""
-rm -rf logs/* &> /dev/null
+rm -rf logs/* 2> /dev/null
 sleep 0.2
-tput cnorm;exit 1
+tput cnorm; exit 1
 }
 
 function ncurses_utils(){
@@ -143,7 +143,7 @@ case $Activate in
             let list_num=$(($list_num+1))
         done
         sleep 0.2
-        play-audio Sounds/Sound.m4a 2>/dev/null &
+        play-audio Sounds/cleaner.mp3 2>/dev/null &
         $DIALOG --backtitle "CLEANER-007" \
             --title "SETTING" \
             --msgbox "\n\nConfiguration completed! :)" 9 50
@@ -370,6 +370,7 @@ else
             rm -f ./logs/obsolete.log &> /dev/null
         fi
         ((_counter+=10))
+        play-audio Sounds/CSound.mp3 2> /dev/null &
         sleep 1
     fi
 fi

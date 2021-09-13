@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 #cleaner-007
 #Coded by Z3R07-RED on Jun 18 2020
-#https://github.com/Z3R07-RED/Cleaner-007.git
+#<https://github.com/Z3R07-RED/Cleaner-007.git>
 
 if [[ -f ".config/.dialog.conf" ]]; then
     export DIALOGRC=.config/.dialog.conf
